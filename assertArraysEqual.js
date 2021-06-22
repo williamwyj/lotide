@@ -22,9 +22,9 @@ const eqArrays = function (array1, array2){
 
 const assertArrayEqual = function(arrayA,arrayB) {
   if(eqArrays(arrayA, arrayB)){
-    console.log(`🟢Assertion Passed, arrays are equal`);
+    console.log(`🟢Assertion Passed, ${arrayA} === ${arrayB}`);
   } else {
-    console.log(`🔴Assertion Failed, arrays are not equal`);
+    console.log(`🔴Assertion Failed, ${arrayA} !== ${arrayB}`);
   }
 };
 
