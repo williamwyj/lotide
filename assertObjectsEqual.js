@@ -19,12 +19,22 @@ const eqObjects = function(object1, object2) {
     return false;
   }
   for (let item1 in object1) {
-    if (typeof(object1[item1]) === 'object') {
-      if (!eqArrays(object1[item1], object2[item1])) {
+    if (typeof object1[item1] === 'object' && !Array.isArray(object1[item1])) {
+      if (typeof object2[item1] !== 'object') {
+        return false;
+      } else {
+        if (!eqObjects(object1[item1], object2[item1])) {
+          return false;
+        }
+      }
+    } else {
+      if (typeof(object1[item1]) === 'object') {
+        if (!eqArrays(object1[item1], object2[item1])) {
+          return false;
+        }
+      } else if (object1[item1] !== object2[item1]) {
         return false;
       }
-    } else if (object1[item1] !== object2[item1]) {
-      return false;
     }
   }
   return true;
@@ -39,14 +49,12 @@ const assertObjectsEqual = function(object1, object2) {
   }
 };
 
-const cd = { c: "1", d: ["2", 3] };
-const dc = { d: ["2", 3], c: "1" };
+assertObjectsEqual({ a: { z: 1 }, b: 2 }, { a: { z: 1 }, b: 2 }); // => true
+
+assertObjectsEqual({ a: { y: 0, z: 1 }, b: 2 }, { a: { z: 1 }, b: 2 }); // => false
+assertObjectsEqual({ a: { y: 0, z: 1 }, b: 2 }, { a: 1, b: 2 }); // => false
 
 
-const cd2 = { c: "1", d: ["2", 3, 4] };
 
 
-
-assertObjectsEqual(cd,dc);
-assertObjectsEqual(dc,cd2);
 
